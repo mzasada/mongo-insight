@@ -1,4 +1,2 @@
-sse
+MongoDB insight platform
 ===
-
-Stanford Startup Engineering
