@@ -11,5 +11,8 @@ def index():
 def static(path):
     return static_file(path, root='./app/css/')
 
+@route('/js/:path#.+#')
+def static(path):
+    return static_file(path, root='./app/js/')
 
 run(host='localhost', port=8080, debug=True, reloader=True)
