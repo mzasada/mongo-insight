@@ -6,14 +6,13 @@
 
   <groupId>org.mongocrunch</groupId>
   <artifactId>cruncher-parent</artifactId>
-  <name>mongocruncher.org:parent</name>
+  <name>mongocruncher:parent</name>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
     <module>digester</module>
     <module>ingester</module>
-    <module>extractor</module>
   </modules>
 
   <properties>
@@ -24,6 +23,8 @@
     <slf4j.version>1.7.1</slf4j.version>
     <logback.version>1.0.11</logback.version>
     <gmaven-runtime-2.0.version>1.5</gmaven-runtime-2.0.version>
+    <spring.version>3.2.4.RELEASE</spring.version>
+    <jackson.version>2.2.3</jackson.version>
   </properties>
 
   <build>
@@ -143,6 +144,21 @@
       </dependency>
 
       <!-- Spring -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
 
       <!-- MongoDB -->
       <dependency>
@@ -178,6 +194,17 @@
         <version>${logback.version}</version>
       </dependency>
 
+      <!-- Jackson -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
