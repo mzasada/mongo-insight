@@ -3,13 +3,35 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+                           http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+  <context:property-placeholder location="classpath:repository.properties,
+    file:${user.home}/.mongocrunch/repository.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
 
   <context:component-scan base-package="org.mongocrunch.ingester.service" />
 
   <task:annotation-driven executor="poolTaskExecutor" />
   <task:executor id="poolTaskExecutor" pool-size="20" />
+
+  <mongo:repositories base-package="org.mongocrunch.ingester.repository" />
+
+  <mongo:mongo id="mongo" replica-set="${mongo.hosts}" write-concern="JOURNAL_SAFE">
+    <mongo:options auto-connect-retry="true" connections-per-host="40" />
+  </mongo:mongo>
+
+  <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    <constructor-arg name="mongo" ref="mongo" />
+    <constructor-arg name="databaseName" value="${mongo.db}" />
+    <constructor-arg name="userCredentials">
+      <bean class="org.springframework.data.authentication.UserCredentials">
+        <constructor-arg name="username" value="${mongo.user}" />
+        <constructor-arg name="password" value="${mongo.pass}" />
+      </bean>
+    </constructor-arg>
+  </bean>
 
 </beans>
